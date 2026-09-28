@@ -1,0 +1,27 @@
+{% extends "hobbies/base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}Agregar interés{% endblock %}
+{% block nav_agregar %}active{% endblock %}
+
+{% block content %}
+<div class="page-intro">
+    <h2>Escribe una nueva nota</h2>
+    <p>Cuéntale a tu cuaderno qué hobby o interés quieres empezar a seguir.</p>
+</div>
+
+<form class="note-form" method="post" novalidate>
+    {% csrf_token %}
+    {% for field in form %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {% if field.errors %}
+            {% render_field field class="has-error" %}
+        {% else %}
+            {{ field }}
+        {% endif %}
+        {% if field.help_text %}<p class="helptext">{{ field.help_text }}</p>{% endif %}
+        {{ field.errors }}
+    {% endfor %}
+    <button class="btn btn-pine" type="submit">Guardar en mi cuaderno</button>
+</form>
+{% endblock %}

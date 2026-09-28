@@ -1,0 +1,28 @@
+{% extends "hobbies/base.html" %}
+
+{% block title %}Mis notas{% endblock %}
+{% block nav_index %}active{% endblock %}
+
+{% block content %}
+<div class="page-intro">
+    <h2>Tu tablero de hobbies</h2>
+    <p>Cada nota es un interés que estás siguiendo. Ábrela para ver tus apuntes y los lugares donde podrías explorarlo más a fondo.</p>
+    <a class="btn btn-pine" href="{% url 'hobbies:agregar' %}">Agregar un nuevo interés</a>
+</div>
+
+<div class="corkboard">
+    {% if intereses %}
+    <div class="sticky-grid">
+        {% for interes in intereses %}
+        <a class="sticky-note" href="{% url 'hobbies:detail' interes.pk %}">
+            <span class="tag">{{ interes.get_categoria_display }}</span>
+            <h3>{{ interes.nombre }}</h3>
+            <p class="nivel">Nivel: {{ interes.get_nivel_display }}</p>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p class="empty-note">El corcho está vacío. Agrega tu primer hobby para empezar tu cuaderno.</p>
+    {% endif %}
+</div>
+{% endblock %}

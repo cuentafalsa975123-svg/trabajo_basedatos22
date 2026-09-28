@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Inicio{% endblock %} · Mi cuaderno de intereses</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'hobbies/estilos/style.css' %}">
+</head>
+<body>
+    <header class="notebook-header">
+        <div class="shell">
+            <a href="{% url 'hobbies:index' %}" style="text-decoration:none;">
+                <div class="notebook-title-tag">
+                    <h1>Mi cuaderno de intereses</h1>
+                    <span>hobbies, notas y dónde explorarlos</span>
+                </div>
+            </a>
+            <nav class="notebook-nav">
+                <a class="{% block nav_index %}{% endblock %}" href="{% url 'hobbies:index' %}">Mis notas</a>
+                <a class="{% block nav_agregar %}{% endblock %}" href="{% url 'hobbies:agregar' %}">Agregar</a>
+                <a class="{% block nav_buscar %}{% endblock %}" href="{% url 'hobbies:buscar' %}">Buscar</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="shell">
+            {% if messages %}
+                <div class="messages-box" style="margin-bottom:1.6rem;">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="notebook-footer">
+        <span>Proyecto de evaluación · Desarrollo de aplicaciones del lado del servidor con Django e IA</span>
+    </footer>
+</body>
+</html>

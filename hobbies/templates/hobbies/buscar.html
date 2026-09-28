@@ -1,0 +1,37 @@
+{% extends "hobbies/base.html" %}
+
+{% block title %}Buscar{% endblock %}
+{% block nav_buscar %}active{% endblock %}
+
+{% block content %}
+<div class="page-intro">
+    <h2>¿Dónde puedo encontrar esto?</h2>
+    <p>Escribe un hobby, categoría o palabra clave y te mostramos lugares, comunidades o sitios relacionados.</p>
+</div>
+
+<form class="search-box" method="get">
+    <input type="text" name="q" value="{{ query }}" placeholder="Ej: escalada, pintura, ajedrez...">
+    <button class="btn btn-pine" type="submit">Buscar</button>
+</form>
+
+{% if query %}
+    {% if resultados %}
+        {% for recurso in resultados %}
+        <div class="resultado-item">
+            <span class="tipo-tag">{{ recurso.get_tipo_display }} · {{ recurso.get_categoria_display }}</span>
+            {% if recurso.enlace %}
+                <p><a href="{{ recurso.enlace }}" target="_blank" rel="noopener"><strong>{{ recurso.nombre_lugar }}</strong></a></p>
+            {% else %}
+                <p><strong>{{ recurso.nombre_lugar }}</strong></p>
+            {% endif %}
+            {% if recurso.descripcion %}<p style="color:var(--ink-soft);font-size:0.92rem;">{{ recurso.descripcion }}</p>{% endif %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="fallback-box">
+            <p>No tenemos recursos guardados para "<strong>{{ query }}</strong>" todavía.</p>
+            <a class="btn btn-outline" href="{{ enlace_externo }}" target="_blank" rel="noopener">Buscarlo en la web</a>
+        </div>
+    {% endif %}
+{% endif %}
+{% endblock %}
