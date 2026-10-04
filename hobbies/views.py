@@ -7,6 +7,14 @@ from django.views import generic
 
 from .forms import InteresForm
 from .models import Interes, RecursoSugerido
+from rest_framework import viewsets, permissions
+from .models import Interes
+from .serializers import InteresSerializer
+
+class InteresViewSet(viewsets.ModelViewSet):
+    queryset = Interes.objects.all()
+    serializer_class = InteresSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class IndexView(generic.ListView):

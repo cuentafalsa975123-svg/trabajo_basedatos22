@@ -57,25 +57,56 @@ Para desplegar esta aplicación fuera del entorno local se necesitaría:
 - **Panel de administración de Django:** gestión de `Interes` y `RecursoSugerido` con filtros y búsqueda.
 
 ## Cómo ejecutar el proyecto
+# HobbyTracker - API RESTful y Gestión de Intereses con Django
 
-```
-# 1. Entrar a la carpeta del proyecto
-cd djangotutorial
+Aplicación web desarrollada en Django para la gestión de intereses y pasatiempos, integrada con PostgreSQL/SQLite y expuesta mediante una **API RESTful segura** utilizando **Django REST Framework (DRF)**.
 
-# 2. Instalar dependencias
-pip install django django-widget-tweaks
+---
 
-# 3. Crear la base de datos
-python manage.py migrate
+## 🛠️ Requisitos Previos e Instalación
 
-# 4. Cargar datos de prueba (opcional pero recomendado)
-python manage.py cargar_datos_prueba
+1. **Clonar el repositorio y entrar a la carpeta:**
+   ```bash
+   git clone <https://github.com/cuentafalsa975123-svg/bookverse-app>
+   cd djangotutorial
+2. crear y activar entorno virtual
+    python -m venv venv
+    .\venv\Scripts\activate
+3. instalar dependencias:
+    pip install -r requirements.txt
+4. ejecutar migraciones e iniciar el servidor:
+    python manage.py migrate
+    python manage.py runserver
 
-# 5. (Opcional) Crear usuario admin
-python manage.py createsuperuser
 
-# 6. Iniciar el servidor
-python manage.py runserver
-```
 
-Luego visita `http://127.0.0.1:8000/` para ver el tablero de intereses.
+1. Atenticacion y endpoints de la api rest
+api de autenticacion basada en tokens(tokenuthentications)
+metodo: Post /api-token-auth/
+cuerpo peticion json:
+{
+    "username": "jeldres",
+    "password": "contraseña"
+}
+devuelve clave token de usuario
+
+2. Consultar / Gestionar Intereses (CRUD)
+Método y Ruta: GET /api/intereses/ (Soporta GET, POST, PUT, DELETE)
+
+Header requerido para peticiones autenticadas:
+Authorization: Token <token de usuario>
+
+1. Uso de Inteligencia Artificial y Validaciones
+Durante el desarrollo se utilizaron herramientas de IA como apoyo técnico en las siguientes áreas:
+
+Diseño y Arquitectura de la API:
+
+Recomendación recibida: Implementación de DefaultRouter y ModelViewSet para una estructura RESTful limpia, junto con TokenAuthentication.
+
+Validación realizada: Se probó la generación de tokens y el consumo de la API mediante Thunder Client enviando las cabeceras HTTP correspondientes (Authorization: Token <token>).
+
+Seguridad y Resolución de Errores:
+
+Recomendación recibida: Configuración de .gitignore estricto para evitar subir entornos virtuales (venv), bases de datos locales o credenciales.
+
+Análisis crítico: Se detectó y corrigió un error de sobrescritura de urlpatterns en hobbies/urls.py que anulaba los endpoints de la API, unificando las rutas REST y las vistas HTML en una sola lista.
